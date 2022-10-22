@@ -27,6 +27,7 @@ class Subject(models.Model):
     name = models.CharField(max_length=120)
     image = models.ImageField(upload_to='subjects/', null=True, blank=True)
     price = models.PositiveIntegerField()
+    class_subject = models.ForeignKey(StudentClass, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -37,7 +38,7 @@ class Subject(models.Model):
 
 
 class Theme(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='subject_theme')
     name = models.CharField(max_length=300)
     student_class = models.ForeignKey(StudentClass, on_delete=models.CASCADE)
 
@@ -50,7 +51,7 @@ class Theme(models.Model):
 
 
 class CourseVideo(models.Model):
-    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='course_video')
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='course_theme')
     name = models.CharField(max_length=221)
     description = models.TextField()
     video = models.FileField(upload_to=f'{theme.name}')

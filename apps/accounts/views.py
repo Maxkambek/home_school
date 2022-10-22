@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
-
 from .utils import verify
 from apps.accounts.serializers import RegisterStudentSerializer, RegisterParentSerializer, LoginSerializer, \
     VerifySerializer, VerifyRegisterSerializer, ChangePasswordSerializer, ResetPasswordSerializer, UserSerializer
@@ -201,31 +200,5 @@ class ConfirmResetPasswordView(generics.GenericAPIView):
 
 class MyAccountRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
-
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = Account.objects.filter(user=self.request.user).first()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-    def perform_update(self, serializer):
-        serializer.save()
-
-    def partial_update(self, request, *args, **kwargs):
-        kwargs['partial'] = True
-        return self.update(request, *args, **kwargs)
-
-    def retrieve(self, request, *args, **kwargs):
-        instance = Account.objects.filter(user=self.request.user).first()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
-
-    def destroy(self, request, *args, **kwargs):
-        instance = Account.objects.filter(user=self.request.user).first()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-    def perform_destroy(self, instance):
-        instance.delete()
+    queryset = Account.objects.all()
+    lookup_field = 'pk'

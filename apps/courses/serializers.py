@@ -13,7 +13,7 @@ class ThemeSerializer(ModelSerializer):
 
     class Meta:
         model = Theme
-        fields = ['id', 'name', 'subject_theme']
+        fields = ['id', 'name', 'subject_theme', 'get_count']
 
 
 class CourseVideoSerializer(ModelSerializer):

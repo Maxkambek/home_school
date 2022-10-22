@@ -16,3 +16,11 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
+
+
+class MyCourses(models.Model):
+    course = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='my_courses')
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.course.name

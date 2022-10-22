@@ -1,6 +1,8 @@
 from .serializers import CourseVideoSerializer, SubjectSerializer, ThemeSerializer
 from .models import Theme, Subject, CourseVideo
 from rest_framework import generics
+from apps.orders.models import MyCourses
+from apps.orders.serializers import MyCoursesSerializer
 
 
 class SubjectListAPIView(generics.ListAPIView):
@@ -30,4 +32,6 @@ class CourseVideoListAPIView(generics.ListAPIView):
         return queryset
 
 
-
+class MyCoursesAPIView(generics.ListAPIView):
+    serializer_class = MyCoursesSerializer
+    queryset = MyCourses.objects.all()

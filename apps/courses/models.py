@@ -45,6 +45,10 @@ class Theme(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def get_count(self):
+        return self.course_theme.count()
+
     class Meta:
         verbose_name = 'Theme'
         verbose_name_plural = 'Themes'

@@ -1,5 +1,17 @@
-from .models import Subject, Theme, CourseVideo
+from .models import Subject, Theme, CourseVideo, StudentClass, StudentAge
 from rest_framework.serializers import ModelSerializer
+
+
+class StudentClassSerializer(ModelSerializer):
+    class Meta:
+        model = StudentClass
+        fields = ['id', 'name']
+
+
+class StudentAgeSerializer(ModelSerializer):
+    class Meta:
+        model = StudentAge
+        fields = ['id', 'age']
 
 
 class SubjectSerializer(ModelSerializer):
@@ -17,8 +29,8 @@ class ThemeSerializer(ModelSerializer):
 
 
 class CourseVideoSerializer(ModelSerializer):
-    course_theme = ThemeSerializer
+    courses_themes = ThemeSerializer()
 
     class Meta:
         model = CourseVideo
-        fields = ['id', 'name', 'description', 'course_theme', 'video']
+        fields = ['id', 'name', 'description', 'courses_themes', 'video']

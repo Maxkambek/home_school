@@ -9,9 +9,12 @@ DEBUG = True
 
 AUTH_USER_MODEL = 'accounts.Account'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
+    # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -19,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'drf_yasg',
+    'rest_framework',
+    'rest_framework.authtoken',
 
     'apps.accounts',
     'apps.courses',

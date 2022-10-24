@@ -6,7 +6,7 @@ from apps.courses.serializers import SubjectSerializer
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'course', 'client']
+        fields = ['course', 'client']
 
 
 class MyCoursesSerializer(serializers.ModelSerializer):

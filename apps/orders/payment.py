@@ -4,7 +4,7 @@ from payme.cards.subscribe_cards import PaymeSubscribeCards
 
 client = PaymeSubscribeCards(
     base_url="https://checkout.paycom.uz/api/",
-    # paycom_id="633d7513bf553666080585c6"
+    paycom_id="633d7513bf55366608085c6"
 )
 
 
@@ -166,5 +166,5 @@ class PaymeSubscribeReceipts:
 client_receipt = PaymeSubscribeReceipts(
     base_url="https://checkout.paycom.uz/api/",
     paycom_id="633d7513bf553666080585c6",
-    # paycom_key="vy3&Egn?KB7tp2Qg9KjZOgBpdE9iEx2rP@HU"
+    paycom_key="vy3&Egn?KB7tp2Qg9KjZOgBpdE9iEx2rP@H"
 )

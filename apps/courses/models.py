@@ -47,7 +47,7 @@ class Theme(models.Model):
 
     @property
     def get_count(self):
-        return self.course_theme.count()
+        return self.courses_themes.count()
 
     class Meta:
         verbose_name = 'Theme'
@@ -55,7 +55,7 @@ class Theme(models.Model):
 
 
 class CourseVideo(models.Model):
-    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='course_theme')
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='courses_themes')
     name = models.CharField(max_length=221)
     description = models.TextField()
     video = models.FileField(upload_to=f'{theme.name}')

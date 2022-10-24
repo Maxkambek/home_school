@@ -59,7 +59,9 @@ class AddConnectionAPIView(APIView):
             account = Account.objects.filter(phone=parent).first()
             if account:
                 user.student_id = account.id
+                account.parent_id = user.id
                 user.save()
+                account.save()
                 return Response({'message': 'Your child is added'}, status=status.HTTP_201_CREATED)
             return Response({'message': 'User not found with this phone'}, status=status.HTTP_404_NOT_FOUND)
         if user.user_type == 2:

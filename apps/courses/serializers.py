@@ -17,7 +17,7 @@ class StudentAgeSerializer(ModelSerializer):
 class SubjectSerializer(ModelSerializer):
     class Meta:
         model = Subject
-        fields = ['id', 'name', 'price']
+        fields = ['id', 'name', 'general_price']
 
 
 class ThemeSerializer(ModelSerializer):
@@ -33,4 +33,4 @@ class CourseVideoSerializer(ModelSerializer):
 
     class Meta:
         model = CourseVideo
-        fields = ['id', 'name', 'description', 'courses_themes', 'video']
+        fields = ['id', 'price', 'name', 'description', 'courses_themes', 'video']

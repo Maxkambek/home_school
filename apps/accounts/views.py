@@ -1,12 +1,11 @@
 import random
 from rest_framework import generics, status, authentication, permissions
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from .utils import verify
-from apps.accounts.serializers import RegisterStudentSerializer, RegisterParentSerializer, LoginSerializer, \
-    VerifySerializer, VerifyRegisterSerializer, ChangePasswordSerializer, ResetPasswordSerializer, UserSerializer
+from apps.accounts.serializers import RegisterParentSerializer, LoginSerializer, \
+    VerifySerializer, VerifyRegisterSerializer, UserSerializer
 from apps.accounts.models import Account, VerifyPhone
 
 
@@ -159,64 +158,6 @@ class VerifyPhoneAPIView(APIView):
                 return Response("Phone number or code invalid", status=status.HTTP_400_BAD_REQUEST)
         except:
             return Response("Phone number or code invalid", status=status.HTTP_400_BAD_REQUEST)
-
-
-class ChangePasswordView(generics.UpdateAPIView):
-    queryset = Account.objects.all()
-    serializer_class = ChangePasswordSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def patch(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response({'success': True, 'message': 'Successfully changed password'})
-
-
-class ResetPasswordView(generics.GenericAPIView):
-    serializer_class = VerifySerializer
-
-    def post(self, request):
-        phone = self.request.data.get('phone')
-        user = Account.objects.filter(phone=phone).first()
-        if not user:
-            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-        if phone:
-            code = str(random.randint(10000, 100000))
-            ver = verify(phone, code)
-            # if ver:
-            VerifyPhone.objects.create(phone=phone, code=code)
-            return Response({"message": "SMS jo'natildi"}, status=status.HTTP_200_OK)
-            # else:
-            #     return Response({"message": "Phone number is not valid"}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response({"message": "Phone number is required"}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class CheckResetPasswordAPIView(APIView):
-    def post(self, request, *args, **kwargs):
-        phone = self.request.data.get('phone')
-        code = self.request.data.get('code')
-        ver = VerifyPhone.objects.filter(phone=phone, code=code).first()
-        if ver:
-            ver.delete()
-            return Response({'message': 'code is correct'}, status=status.HTTP_200_OK)
-        return Response({'message': 'Code is incorrect'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class ConfirmResetPasswordView(generics.GenericAPIView):
-    serializer_class = ResetPasswordSerializer
-
-    def post(self, request):
-        phone = request.data.get('phone')
-        password = request.data.get('password')
-        user = Account.objects.filter(phone=phone).first()
-        if user:
-            user.set_password(password)
-            user.save()
-            return Response({
-                'msg': "Password changed please login",
-            }, status=status.HTTP_200_OK)
-        return Response({"message": "Invalid Phone"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyAccountRUDAPIView(generics.RetrieveUpdateDestroyAPIView):

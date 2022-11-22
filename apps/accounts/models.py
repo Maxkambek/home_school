@@ -68,3 +68,6 @@ class VerifyPhone(models.Model):
 
     phone = models.CharField(max_length=15, verbose_name="Telefon raqam")
     code = models.CharField(max_length=10, verbose_name="Kod")
+
+    def __str__(self):
+        return self.phone

@@ -80,18 +80,21 @@ class LoginView(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            print(serializer.data)
-            phone = serializer.data['phone']
-            print(phone)
-            password = serializer.data['password']
+            user_data = serializer.data
+            phone = user_data['phone']
             user = Account.objects.filter(phone=phone).first()
             if not user:
-                return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-            if not user.check_password(password):
-                return Response({"message": 'Password is incorrect'}, status=status.HTTP_406_NOT_ACCEPTABLE)
-            token, created = Token.objects.get_or_create(user=user)
-            return Response(
-                {'Phone': phone, 'token': token.key}, status=status.HTTP_200_OK)
+                return Response({"message": 'User is not found'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            kod = str(random.randint(10000, 100000))
+            if len(phone) == 13:
+                verify(phone, kod)
+                VerifyPhone.objects.create(phone=phone, code=kod)
+            if len(phone) != 13:
+                return Response({'message': 'Telefon nomer to`g`ri kiritilmagan'}, status=status.HTTP_400_BAD_REQUEST)
+            if verify:
+                return Response(
+                    {'Phone': phone, 'message': 'Verification code was sent to your phone'},
+                    status=status.HTTP_200_OK)
         return Response({'success': False, 'message': 'Phone or password is invalid'},
                         status=status.HTTP_404_NOT_FOUND)
 
@@ -146,6 +149,28 @@ class LogoutView(generics.GenericAPIView):
             }, status=status.HTTP_204_NO_CONTENT)
         except:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+class VerifyPhoneAPIView(APIView):
+    def post(self, request):
+        try:
+            phone = request.data.get('phone')
+            code = request.data.get('code')
+            verify = VerifyPhone.objects.filter(phone=phone, code=code).first()
+            if verify:
+                user = Account.objects.filter(phone=phone).first()
+                user.is_verified = True
+                user.save()
+                verify.delete()
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({
+                    'msg': "Phone number is verified ",
+                    'token': token.key
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response("Phone number or code invalid", status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response("Phone number or code invalid", status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(generics.UpdateAPIView):

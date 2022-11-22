@@ -4,7 +4,7 @@ import requests
 def verify(phone_number, code):
     URL = "http://notify.eskiz.uz/api/message/sms/send"
     PARAMS = {
-        "Authorization": ""}
+        "Authorization": "Bearer "}
     phone = str(phone_number)[1:13]
     data = {
         'mobile_phone': phone,

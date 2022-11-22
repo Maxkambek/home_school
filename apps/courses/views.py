@@ -26,7 +26,7 @@ class ThemeListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = Theme.objects.all()
-        pk = self.request.GET.get('subject')
+        pk = self.request.GET.get('subject_id')
         if pk:
             queryset = queryset.filter(subject_id=pk)
         return queryset
@@ -37,7 +37,7 @@ class CourseVideoListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = CourseVideo.objects.all()
-        pk = self.request.GET.get('theme')
+        pk = self.request.GET.get('theme_id')
         if pk:
             queryset = queryset.filter(theme_id=pk)
         return queryset

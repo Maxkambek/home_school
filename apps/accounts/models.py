@@ -48,7 +48,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
     student_id = models.PositiveIntegerField(default=0)
     sex = models.CharField(choices=SEX, max_length=12, default='Male')
     student_class = models.ForeignKey(StudentClass, on_delete=models.SET_NULL, null=True, blank=True)
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE, default='2')
     age = models.ForeignKey(StudentAge, on_delete=models.SET_NULL, null=True, blank=True)
     date_login = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)

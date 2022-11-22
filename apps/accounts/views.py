@@ -104,6 +104,10 @@ class VerifyPhoneRegisterAPIView(generics.GenericAPIView):
             phone = request.data.get('phone')
             code = request.data.get('code')
             password = request.data.get('password')
+            sex = request.data.get('gender')
+            first_name = request.data.get('first_name')
+            last_name = request.data.get('last_name')
+
             verify = VerifyPhone.objects.filter(phone=phone, code=code).first()
             print(verify)
             if verify:
@@ -111,7 +115,8 @@ class VerifyPhoneRegisterAPIView(generics.GenericAPIView):
                 user = Account.objects.filter(phone=phone)
                 if user:
                     return Response({'message': 'User have already registered'}, status=409)
-                user = Account.objects.create_user(phone=phone, password=password)
+                user = Account.objects.create_user(phone=phone, password=password, sex=sex, first_name=first_name,
+                                                   last_name=last_name)
                 user.is_verified = True
                 user.save()
                 verify.delete()

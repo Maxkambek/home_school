@@ -8,7 +8,7 @@ class RegisterParentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ['id', 'phone', 'first_name', 'last_name', 'password', 'sex']
+        fields = ['id', 'phone', 'password']
 
 
 class RegisterStudentSerializer(serializers.ModelSerializer):
@@ -50,7 +50,7 @@ class VerifyRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VerifyPhone
-        fields = ('phone', 'code', 'password')
+        fields = ['phone', 'code', 'password']
 
 
 class VerifySerializer(serializers.ModelSerializer):

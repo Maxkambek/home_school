@@ -43,7 +43,7 @@ coverage.xml
 
 # VirtualEnv
 .venv/
-venv
+venv/
 # Developers
 *.sw*
 manage.py

@@ -1,4 +1,4 @@
-#!/home/mahkam/Desktop/Django/new_project/venv/bin/python3
+#!/home/oem/Desktop/Django/edde/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

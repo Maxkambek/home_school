@@ -10,28 +10,8 @@ from apps.accounts.serializers import RegisterStudentSerializer, RegisterParentS
 from apps.accounts.models import Account, VerifyPhone
 
 
-class ParentRegisterView(generics.GenericAPIView):
+class RegisterView(generics.GenericAPIView):
     serializer_class = RegisterParentSerializer
-
-    def post(self, request):
-        user = Account.objects.filter(phone=request.data['phone'])
-        if user:
-            return Response({'message': "User have already registered"}, status=status.HTTP_409_CONFLICT)
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        phone = serializer.data['phone']
-        kod = str(random.randint(10000, 100000))
-        if len(phone) == 13:
-            verify(phone, kod)
-            VerifyPhone.objects.create(phone=phone, code=kod)
-        if len(phone) != 13:
-            return Response({'message': 'Telefon nomer to`g`ri kiritilmagan'}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response({'success': True, 'message': 'Please verify phone'}, status=status.HTTP_201_CREATED)
-
-
-class StudentRegisterView(generics.GenericAPIView):
-    serializer_class = RegisterStudentSerializer
 
     def post(self, request):
         user = Account.objects.filter(phone=request.data['phone'])
@@ -146,7 +126,7 @@ class LogoutView(generics.GenericAPIView):
             user.save()
             return Response({
                 "message": "Logout Success"
-            }, status=status.HTTP_204_NO_CONTENT)
+            }, status=status.HTTP_200_OK)
         except:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 

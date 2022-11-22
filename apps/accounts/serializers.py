@@ -26,23 +26,6 @@ class LoginSerializer(serializers.ModelSerializer):
         model = Account
         fields = ['phone']
 
-    # def validate(self, attrs):
-    #     phone = attrs.get('phone')
-    #     password = attrs.get('password')
-    #     print(password)
-    #     user = Account.objects.filter(phone=phone).first()
-    #     if not user:
-    #         raise serializers.ValidationError({'success': False, 'message': 'User not found'})
-    #     if not user.is_verified:
-    #         raise serializers.ValidationError({'message': 'user is not verified'})
-    #     if user:
-    #         authenticate(phone=phone, password=password)
-    #     data = {
-    #         'phone': user.phone,
-    #         'password': user.password
-    #     }
-    #     return data
-
 
 class VerifyRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=64, min_length=4, write_only=True)

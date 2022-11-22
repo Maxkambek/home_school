@@ -6,6 +6,7 @@ urlpatterns = [
     path('parent-register/', views.ParentRegisterView.as_view()),
     path('student-register/', views.StudentRegisterView.as_view()),
     path('verify-register/', views.VerifyPhoneRegisterAPIView.as_view()),
+    path('verify-login/', views.VerifyPhoneAPIView.as_view()),
     path('logout/', views.LogoutView.as_view()),
     path('add-connection/', views.AddConnectionAPIView.as_view()),
     path('change-password/', views.ChangePasswordView.as_view()),

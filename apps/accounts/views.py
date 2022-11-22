@@ -34,7 +34,7 @@ class AddConnectionAPIView(APIView):
     def post(self, request, *args, **kwargs):
         parent = self.request.data['phone']
         user = self.request.user
-        if user.user_type == 1:
+        if user.is_parent:
             account = Account.objects.filter(phone=parent).first()
             if account:
                 user.student_id = account.id
@@ -43,7 +43,7 @@ class AddConnectionAPIView(APIView):
                 account.save()
                 return Response({'message': 'Your child is added'}, status=status.HTTP_201_CREATED)
             return Response({'message': 'User not found with this phone'}, status=status.HTTP_404_NOT_FOUND)
-        if user.user_type == 2:
+        if not user.is_parent:
             account = Account.objects.filter(phone=parent).first()
             if account:
                 user.parent_id = account.id

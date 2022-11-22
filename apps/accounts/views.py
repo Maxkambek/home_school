@@ -165,4 +165,5 @@ class VerifyPhoneAPIView(APIView):
 class MyAccountRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = Account.objects.all()
-    lookup_field = 'pk'
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]

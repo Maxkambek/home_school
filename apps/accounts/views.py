@@ -30,6 +30,8 @@ class RegisterView(generics.GenericAPIView):
 
 
 class AddConnectionAPIView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         parent = self.request.data['phone']

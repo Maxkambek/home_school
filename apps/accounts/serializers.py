@@ -21,11 +21,10 @@ class RegisterStudentSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=20, required=True)
-    password = serializers.CharField(max_length=64)
 
     class Meta:
         model = Account
-        fields = ['phone', 'password']
+        fields = ['phone']
 
     # def validate(self, attrs):
     #     phone = attrs.get('phone')

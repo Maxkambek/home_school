@@ -21,7 +21,6 @@ marshmallow==3.19.0
 packaging==21.3
 payme-pkg==2.1
 Pillow==9.2.0
-pkg_resources==0.0.0
 psycopg2-binary==2.9.5
 pycparser==2.21
 pyparsing==3.0.9

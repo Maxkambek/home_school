@@ -17,7 +17,7 @@ ALLOWED_HOSTS = ['*']
 CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
-    # 'jazzmin',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +39,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -103,13 +104,36 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',
+]
+
+LANGUAGES = (
+    ('uz', 'Uzbek'),
+    ('ru', 'Russian'),
+    ('en', 'English'),
+    ('tg', 'Tajik'),
+    ('be', 'Belarusian'),
+    ('kk', 'Kazakh'),
+    ('az', 'Azerbaijani'),
+    ('ky', 'Kirghiz; Kyrgyz'),
+    ('zh', 'Chinese'),
+)
+
+MODELTRANSLATION_LANGUAGES = ('ru', 'uz', 'en', 'tg', 'be', 'kk', 'az', 'ky', 'zh')
+MODELTRANSLATION_TRANSLATION_FILES = (
+    'apps.courses.translation',
+)
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

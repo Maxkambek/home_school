@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from apps.accounts.models import Account
-from .models import Order
+from .models import Order, MyVideos
 from .serializers import OrderSerializer
 from rest_framework import generics, status
 from .payment import client, client_receipt
@@ -43,8 +43,12 @@ class CardVerify(APIView):
 
 class ReceiptCreate(APIView):
     def post(self, request, *args, **kwargs):
-        amount = float(self.request.data.get('amount')) * 100
+        amount = float(self.request.data.get('amount'))  # * 100
         pk = self.request.data.get('course_id')
+        videos = self.request.data.get('videos')
+        if videos:
+            my_video = MyVideos.objects.create(user=self.request.user, videos=videos)
+            my_video.save()
         user = Account.objects.first()
         check = Order.objects.filter(client=user, course_id=pk)
         if check.is_paid:

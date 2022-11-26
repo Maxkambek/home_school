@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from apps.accounts.models import Account
-from apps.courses.models import Subject
+from apps.courses.models import Subject, CourseVideo
 
 
 class Order(models.Model):
@@ -24,3 +24,8 @@ class MyCourses(models.Model):
 
     def __str__(self):
         return self.course.name
+
+
+class MyVideos(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='my_videos')
+    video = models.ManyToManyField(CourseVideo)

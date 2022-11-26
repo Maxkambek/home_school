@@ -34,3 +34,5 @@ class CourseVideoSerializer(ModelSerializer):
     class Meta:
         model = CourseVideo
         fields = ['id', 'price', 'name', 'description', 'courses_themes', 'video']
+
+

@@ -69,6 +69,7 @@ DATABASES = {
     }
 }
 
+USE_NGROK = True
 
 AUTH_PASSWORD_VALIDATORS = [
     {
